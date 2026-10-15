@@ -657,8 +657,8 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Serve local vulnerability review UI")
-    parser.add_argument("--reviewed", type=Path, default=Path("reports/lib.reviewed.json"))
-    parser.add_argument("--journal", type=Path, default=Path("reports/security-journal.json"))
+    parser.add_argument("--reviewed", type=Path, default=Path(".reports/lib.reviewed.json"))
+    parser.add_argument("--journal", type=Path, default=Path(".reports/security-journal.json"))
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args()

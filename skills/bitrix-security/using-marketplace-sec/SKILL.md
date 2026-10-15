@@ -19,18 +19,18 @@ This skill is an orchestrator. It does not contain security-audit heuristics. Ke
 
 1. If a previous `security-journal.json` exists, prepare it as context for the scan. The scan skill may use it as `last-result.json`, but it must still verify findings against real code.
 2. Run `scan <module_path>`.
-   - Expected output: `reports/<module_code>.json`
+   - Expected output: `.reports/<module_code>.json`
 3. Run `journal-review` on that scan output.
-   - Recommended output: `reports/<module_code>.reviewed.json`
+   - Recommended output: `.reports/<module_code>.reviewed.json`
 4. Run `journal-update`:
 
 ```bash
 python3 <journal-update-skill>/scripts/update_journal.py \
-  reports/<module_code>.reviewed.json \
-  --previous reports/security-journal.json \
+  .reports/<module_code>.reviewed.json \
+  --previous .reports/security-journal.json \
   --module-path <module_path> \
   --archive-sha256 <sha256> \
-  --output reports/security-journal.json
+  --output .reports/security-journal.json
 ```
 
 For the first run, omit `--previous`.
@@ -39,15 +39,15 @@ For the first run, omit `--previous`.
 
 ```bash
 python3 <journal-update-skill>/scripts/update_journal.py \
-  --validate-only reports/security-journal.json
+  --validate-only .reports/security-journal.json
 ```
 
 6. Launch the local journal UI. This is a required flow step, not an optional convenience. Use the updated reviewed scan and cumulative journal:
 
 ```bash
 python3 tools/journal_ui_server.py \
-  --reviewed reports/<module_code>.reviewed.json \
-  --journal reports/security-journal.json \
+  --reviewed .reports/<module_code>.reviewed.json \
+  --journal .reports/security-journal.json \
   --host 127.0.0.1 \
   --port 8765
 ```
@@ -61,12 +61,12 @@ If port `8765` is already in use, pick the next free port. Open the resulting UR
 
 ## Output Artifacts
 
-- `reports/<module_code>.json` — raw scan output
-- `reports/<module_code>.reviewed.json` — BUS-aware reviewed scan
-- `reports/security-journal.json` — cumulative submission artifact
+- `.reports/<module_code>.json` — raw scan output
+- `.reports/<module_code>.reviewed.json` — BUS-aware reviewed scan
+- `.reports/security-journal.json` — cumulative submission artifact
 - local journal UI URL — required review interface for developer feedback
 
-Only `reports/security-journal.json` is the stable partner submission artifact. The raw and reviewed scan files are intermediate evidence and may be requested for debugging.
+Only `.reports/security-journal.json` is the stable partner submission artifact. The raw and reviewed scan files are intermediate evidence and may be requested for debugging.
 
 ## Boundaries
 

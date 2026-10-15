@@ -826,11 +826,11 @@ severity, fingerprint изменится, и журнал будет счита�
 
 ```bash
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  reports/vendor.module.reviewed.json \
-  --previous reports/security-journal.json \
+  .reports/vendor.module.reviewed.json \
+  --previous .reports/security-journal.json \
   --module-path modules/vendor.module \
   --archive-sha256 <sha256> \
-  --output reports/security-journal.json
+  --output .reports/security-journal.json
 ```
 
 Для первого прогона уберите `--previous`.
@@ -839,5 +839,5 @@ python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
 
 ```bash
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  --validate-only reports/security-journal.json
+  --validate-only .reports/security-journal.json
 ```

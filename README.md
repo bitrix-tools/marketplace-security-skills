@@ -15,7 +15,7 @@ skills/
     using-marketplace-sec/ # интерактивный оркестратор pre-submission flow (с UI)
     scan-composer/         # headless-оркестратор (одна команда, без UI)
 
-reports/
+.reports/
   *.json                   # runtime-артефакты проверок, не коммитятся
 
 tools/
@@ -27,7 +27,7 @@ tools/
 
 ### `scan`
 
-Проводит тщательный аудит одного Bitrix-модуля и сохраняет JSON-отчет в `reports/<module_code>.json`.
+Проводит тщательный аудит одного Bitrix-модуля и сохраняет JSON-отчет в `.reports/<module_code>.json`.
 
 Основные свойства:
 
@@ -46,7 +46,7 @@ scan modules/vendor.module
 Ожидаемый артефакт:
 
 ```text
-reports/vendor.module.json
+.reports/vendor.module.json
 ```
 
 ### `journal-review`
@@ -57,15 +57,15 @@ reports/vendor.module.json
 
 ```bash
 python3 skills/bitrix-security/journal-review/scripts/review_journal.py \
-  reports/vendor.module.json \
-  --output reports/vendor.module.reviewed.json
+  .reports/vendor.module.json \
+  --output .reports/vendor.module.reviewed.json
 ```
 
 Валидация существующего reviewed JSON:
 
 ```bash
 python3 skills/bitrix-security/journal-review/scripts/review_journal.py \
-  --validate-only reports/vendor.module.reviewed.json
+  --validate-only .reports/vendor.module.reviewed.json
 ```
 
 Что меняется:
@@ -83,27 +83,27 @@ python3 skills/bitrix-security/journal-review/scripts/review_journal.py \
 
 ```bash
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  reports/vendor.module.reviewed.json \
+  .reports/vendor.module.reviewed.json \
   --module-path modules/vendor.module \
-  --output reports/security-journal.json
+  --output .reports/security-journal.json
 ```
 
 Повторный запуск с предыдущим журналом:
 
 ```bash
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  reports/vendor.module.reviewed.json \
-  --previous reports/security-journal.json \
+  .reports/vendor.module.reviewed.json \
+  --previous .reports/security-journal.json \
   --module-path modules/vendor.module \
   --archive-sha256 <sha256> \
-  --output reports/security-journal.json
+  --output .reports/security-journal.json
 ```
 
 Валидация:
 
 ```bash
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  --validate-only reports/security-journal.json
+  --validate-only .reports/security-journal.json
 ```
 
 Статусы findings:
@@ -150,29 +150,29 @@ Headless-точка входа того же flow для автоматичес�
 
 # 2. BUS-aware severity review
 python3 skills/bitrix-security/journal-review/scripts/review_journal.py \
-  reports/vendor.module.json \
-  --output reports/vendor.module.reviewed.json
+  .reports/vendor.module.json \
+  --output .reports/vendor.module.reviewed.json
 
 # 3. Накопительный journal
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  reports/vendor.module.reviewed.json \
-  --previous reports/security-journal.json \
+  .reports/vendor.module.reviewed.json \
+  --previous .reports/security-journal.json \
   --module-path modules/vendor.module \
-  --output reports/security-journal.json
+  --output .reports/security-journal.json
 
 # 4. Валидация финального submission artifact
 python3 skills/bitrix-security/journal-update/scripts/update_journal.py \
-  --validate-only reports/security-journal.json
+  --validate-only .reports/security-journal.json
 
 # 5. Обязательный UI для просмотра журнала и feedback
 python3 tools/journal_ui_server.py \
-  --reviewed reports/vendor.module.reviewed.json \
-  --journal reports/security-journal.json \
+  --reviewed .reports/vendor.module.reviewed.json \
+  --journal .reports/security-journal.json \
   --host 127.0.0.1 \
   --port 8765
 ```
 
-Если это первый прогон и предыдущего журнала нет, уберите `--previous reports/security-journal.json`.
+Если это первый прогон и предыдущего журнала нет, уберите `--previous .reports/security-journal.json`.
 Если порт `8765` занят, используйте следующий свободный порт.
 
 ## Локальный UI для журнала
@@ -181,8 +181,8 @@ python3 tools/journal_ui_server.py \
 
 ```bash
 python3 tools/journal_ui_server.py \
-  --reviewed reports/vendor.module.reviewed.json \
-  --journal reports/security-journal.json \
+  --reviewed .reports/vendor.module.reviewed.json \
+  --journal .reports/security-journal.json \
   --host 127.0.0.1 \
   --port 8765
 ```

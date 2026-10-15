@@ -4,7 +4,7 @@ __pycache__/
 *.pyc
 
 # Runtime audit outputs
-reports/*.json
+.reports/*.json
 security-journal.json
 
 # Local browser verification artifacts
