@@ -1,6 +1,6 @@
 ---
 name: using-marketplace-sec
-description: Use when running the full Marketplace security pre-submission flow for Bitrix modules: scan one module, review BUS severity, update the cumulative vulnerability journal, validate saved developer feedback, and summarize release readiness.
+description: "Use when running the full Marketplace security pre-submission flow for Bitrix modules: scan one module, review BUS severity, update the cumulative vulnerability journal, validate saved developer feedback, and summarize release readiness."
 ---
 
 # Using Marketplace Security
